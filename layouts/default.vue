@@ -20,7 +20,7 @@
                 <span>{{ item.name }}</span>
               </NuxtLink>
               <a
-                href="https://voicehub06.xhhhx.xyz"
+                href="https://voicehub506.xhhhx.xyz"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="nav-link nav-link-highlight"
