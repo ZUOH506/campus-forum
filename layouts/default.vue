@@ -1,44 +1,58 @@
 <template>
   <div class="min-h-screen flex flex-col">
-    <header class="liquid-glass-nav sticky top-0 z-50">
+    <header class="glass-nav sticky top-0 z-50">
       <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <div class="flex items-center">
-            <NuxtLink to="/" class="text-2xl font-bold text-black drop-shadow-lg flex items-center gap-2">
-              <span class="text-3xl">🎓</span>
-              <span class="hidden sm:inline">CampusHub</span>
+            <NuxtLink to="/" class="logo-brand flex items-center gap-3 group">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xl shadow-lg group-hover:shadow-xl transition-all duration-300">
+                🎓
+              </div>
+              <span class="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent hidden sm:inline">
+                校园论坛
+              </span>
             </NuxtLink>
-            <div class="hidden sm:ml-8 sm:flex sm:items-center sm:space-x-1">
+            <div class="hidden sm:ml-10 sm:flex sm:items-center sm:space-x-2">
               <NuxtLink
                 v-for="item in navItems"
                 :key="item.path"
                 :to="item.path"
-                class="nav-link"
-                active-class="nav-link-active"
+                class="nav-item"
+                active-class="nav-item-active"
               >
-                <span>{{ item.icon }}</span>
-                <span>{{ item.name }}</span>
+                <span class="text-lg">{{ item.icon }}</span>
+                <span class="font-medium">{{ item.name }}</span>
               </NuxtLink>
               <a
                 href="https://voicehub506.xhhhx.xyz"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="nav-link nav-link-highlight"
+                class="nav-item nav-item-highlight"
               >
-                <span>🎵</span>
-                <span>歌曲投稿</span>
+                <span class="text-lg">🎵</span>
+                <span class="font-medium">歌曲投稿</span>
               </a>
             </div>
           </div>
           <div class="flex items-center space-x-3">
             <template v-if="auth.isAuthenticated">
-              <div class="user-badge">
-                <span class="text-lg">👤</span>
-                <span class="text-sm font-medium text-black">{{ auth.user?.username }}</span>
+              <NuxtLink
+                v-if="auth.user?.username === 'admin'"
+                to="/admin"
+                class="nav-item nav-item-admin"
+              >
+                <span class="text-lg">⚙️</span>
+                <span class="font-medium hidden md:inline">管理</span>
+              </NuxtLink>
+              <div class="user-profile">
+                <div class="user-avatar">
+                  {{ auth.user?.username?.charAt(0).toUpperCase() }}
+                </div>
+                <span class="user-name hidden md:inline">{{ auth.user?.username }}</span>
               </div>
               <button
-                @click="auth.logout"
-                class="nav-action-btn"
+                @click="handleLogout"
+                class="logout-btn"
               >
                 退出
               </button>
@@ -46,13 +60,13 @@
             <template v-else>
               <NuxtLink
                 to="/login"
-                class="nav-link"
+                class="nav-item-login"
               >
                 登录
               </NuxtLink>
               <NuxtLink
                 to="/register"
-                class="nav-register-btn"
+                class="register-btn"
               >
                 注册
               </NuxtLink>
@@ -66,12 +80,19 @@
       <slot />
     </main>
 
-    <footer class="bg-gradient-to-r from-amber-100 via-orange-100 to-teal-100 border-t border-amber-200 mt-auto">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <footer class="footer-gradient border-t border-purple-100 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div class="text-center">
-          <h3 class="text-lg font-bold text-amber-800 mb-2">CampusHub</h3>
-          <p class="text-sm text-amber-700/70">
-            © 2026立达校园论坛. Connecting Campus, Sharing Dreams.
+          <div class="flex items-center justify-center gap-3 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white">
+              🎓
+            </div>
+            <span class="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              校园论坛
+            </span>
+          </div>
+          <p class="text-sm text-gray-500">
+            © 2024 校园论坛. 连接校园，共享精彩！
           </p>
         </div>
       </div>
@@ -83,95 +104,158 @@
 import { useAuthStore } from '~/stores/auth'
 
 const auth = useAuthStore()
+const router = useRouter()
 
 const navItems = [
   { name: '首页', path: '/', icon: '🏠' },
   { name: '帖子', path: '/posts', icon: '📝' },
   { name: '分类', path: '/categories', icon: '📂' }
 ]
+
+const handleLogout = () => {
+  auth.logout()
+  router.push('/')
+}
 </script>
 
 <style scoped>
+.glass-nav {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+  box-shadow: 0 4px 30px rgba(102, 126, 234, 0.08);
+}
 
-.nav-link {
+.logo-brand {
+  @apply no-underline;
+}
+
+.nav-item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.625rem 1.25rem;
   border-radius: 0.75rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  color: #4b5563;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
 }
 
-.nav-link:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 1);
-  transform: translateY(-1px);
+.nav-item:hover {
+  background: rgba(102, 126, 234, 0.08);
+  color: #667eea;
+  transform: translateY(-2px);
 }
 
-.nav-link-active {
-  background: rgba(255, 255, 255, 0.25);
-  color: rgba(255, 255, 255, 1);
-  box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+.nav-item-active {
+  background: rgba(102, 126, 234, 0.12);
+  color: #667eea;
+  font-weight: 600;
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.15);
 }
 
-.nav-link-highlight {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.6), rgba(245, 158, 11, 0.6));
-  border: 1px solid rgba(251, 191, 36, 0.4);
+.nav-item-highlight {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  color: #667eea;
 }
 
-.nav-link-highlight:hover {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.8), rgba(245, 158, 11, 0.8));
-  box-shadow: 
-    0 4px 16px rgba(245, 158, 11, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+.nav-item-highlight:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.25), rgba(118, 75, 162, 0.25));
+  border-color: rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
 }
 
-.user-badge {
+.nav-item-admin {
+  background: rgba(246, 135, 179, 0.15);
+  border: 1px solid rgba(246, 135, 179, 0.2);
+  color: #d53f8c;
+}
+
+.nav-item-admin:hover {
+  background: rgba(246, 135, 179, 0.25);
+  border-color: rgba(246, 135, 179, 0.4);
+}
+
+.user-profile {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.375rem 0.875rem;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.nav-action-btn {
+  gap: 0.75rem;
   padding: 0.5rem 1rem;
-  border-radius: 0.75rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(102, 126, 234, 0.08);
+  border-radius: 9999px;
+  border: 1px solid rgba(102, 126, 234, 0.15);
 }
 
-.nav-action-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: translateY(-1px);
-}
-
-.nav-register-btn {
-  padding: 0.5rem 1.25rem;
-  border-radius: 0.75rem;
-  font-size: 0.875rem;
+.user-avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 600;
-  color: rgba(245, 158, 11, 0.9);
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+}
+
+.user-name {
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.logout-btn {
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #dc2626;
+  background: rgba(252, 129, 129, 0.1);
+  border: 1px solid rgba(252, 129, 129, 0.2);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.nav-register-btn:hover {
-  background: rgba(255, 255, 255, 1);
+.logout-btn:hover {
+  background: rgba(252, 129, 129, 0.2);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.nav-item-login {
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #667eea;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.nav-item-login:hover {
+  background: rgba(102, 126, 234, 0.08);
+  transform: translateY(-2px);
+}
+
+.register-btn {
+  padding: 0.625rem 1.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.35);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.45);
+}
+
+.footer-gradient {
+  background: linear-gradient(to right, rgba(165, 180, 252, 0.3), rgba(192, 192, 245, 0.3), rgba(245, 208, 254, 0.3));
 }
 </style>

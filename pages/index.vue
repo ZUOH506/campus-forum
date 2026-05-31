@@ -1,41 +1,55 @@
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-    <div class="mb-10 text-center">
-      <h1 class="text-4xl font-black text-amber-800 mb-3">
-        ✨ 欢迎来到校园论坛 ✨
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="mb-12 text-center animate-fade-in-up">
+      <h1 class="text-5xl font-black mb-4">
+        <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+          ✨ 欢迎来到校园论坛 ✨
+        </span>
       </h1>
-      <p class="text-lg text-amber-700/70">发现校园生活，分享精彩瞬间</p>
+      <p class="text-xl text-gray-600">发现校园生活，分享精彩瞬间</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div class="lg:col-span-2">
-        <div class="glass-effect rounded-2xl p-7 border border-amber-100 shadow-xl mb-6">
-          <h2 class="text-2xl font-bold text-amber-800 mb-6 flex items-center">
-            📝 最新帖子
+        <div class="glass-effect rounded-3xl p-8 mb-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg">📝</span>
+            最新帖子
           </h2>
-          <div v-if="postsStore.loading" class="text-center py-10 text-black-600">
-            <div class="animate-pulse">加载中...</div>
+          <div v-if="postsStore.loading" class="text-center py-12">
+            <div class="inline-block w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+            <p class="mt-4 text-gray-500">加载中...</p>
           </div>
-          <div v-else-if="postsStore.posts.length === 0" class="text-center py-10 text-amber-600">
-            暂无帖子
+          <div v-else-if="postsStore.posts.length === 0" class="text-center py-12">
+            <div class="text-6xl mb-4">📭</div>
+            <p class="text-gray-500">暂无帖子，来说点什么吧！</p>
+            <NuxtLink to="/posts/create" class="inline-block mt-4 btn-primary">
+              发布第一个帖子
+            </NuxtLink>
           </div>
           <div v-else class="space-y-4">
             <NuxtLink
               v-for="post in postsStore.posts"
               :key="post.id"
               :to="`/posts/${post.id}`"
-              class="block p-5 rounded-xl bg-white/80 border-2 border-transparent hover:border-amber-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              class="block p-6 rounded-2xl bg-white/80 border-2 border-gray-100 hover:border-indigo-300 hover:shadow-xl card-hover transition-all duration-300"
             >
-              <h3 class="text-xl font-bold text-gray-800 mb-2">{{ post.title }}</h3>
+              <h3 class="text-xl font-bold text-gray-800 mb-3">{{ post.title }}</h3>
               <p class="text-gray-600 line-clamp-2 mb-4">{{ post.content }}</p>
               <div class="flex items-center flex-wrap gap-3">
-                <span class="bg-gradient-to-r from-amber-100 to-orange-100 text-amber-700 px-3 py-1 rounded-full text-xs font-semibold">
+                <span class="badge badge-primary">
                   {{ post.categoryName }}
                 </span>
-                <span class="text-sm text-gray-500">👤 {{ post.authorName }}</span>
-                <span class="text-sm text-gray-500">👁️ {{ post.viewCount }}</span>
-                <span class="text-sm text-gray-500">💬 {{ post.commentCount }}</span>
-                <span class="text-sm text-teal-600 font-medium">{{ formatDate(post.createdAt) }}</span>
+                <span class="text-sm text-gray-500 flex items-center gap-1">
+                  <span>👤</span> {{ post.authorName }}
+                </span>
+                <span class="text-sm text-gray-500 flex items-center gap-1">
+                  <span>👁️</span> {{ post.viewCount }}
+                </span>
+                <span class="text-sm text-gray-500 flex items-center gap-1">
+                  <span>💬</span> {{ post.commentCount }}
+                </span>
+                <span class="text-sm text-indigo-600 font-medium ml-auto">{{ formatDate(post.createdAt) }}</span>
               </div>
             </NuxtLink>
           </div>
@@ -43,35 +57,48 @@
       </div>
 
       <div class="space-y-6">
-        <div class="glass-effect rounded-2xl p-6 border border-amber-100 shadow-xl">
-          <h3 class="text-xl font-bold text-amber-800 mb-5 flex items-center">
-            📂 论坛分类
+        <div class="glass-effect rounded-3xl p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-5 flex items-center gap-3">
+            <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white shadow-lg">📂</span>
+            论坛分类
           </h3>
           <div class="space-y-3">
             <NuxtLink
               v-for="category in postsStore.categories"
               :key="category.id"
               :to="`/categories/${category.id}`"
-              class="flex items-center justify-between p-3 rounded-xl bg-white/70 hover:bg-white hover:shadow-md transition-all duration-300 group"
+              class="flex items-center justify-between p-4 rounded-xl bg-white/70 hover:bg-white hover:shadow-lg card-hover transition-all duration-300 group"
             >
-              <span class="text-gray-700 font-medium group-hover:text-amber-700">{{ category.name }}</span>
-              <span class="text-xs bg-amber-100 text-amber-700 px-3 py-1 rounded-full font-bold">
+              <span class="text-gray-700 font-medium group-hover:text-indigo-600">{{ category.name }}</span>
+              <span class="badge badge-primary group-hover:shadow-md transition-shadow">
                 {{ category.postCount }}
               </span>
             </NuxtLink>
           </div>
         </div>
 
-        <div class="glass-effect rounded-2xl p-6 border border-teal-100 shadow-xl">
-          <h3 class="text-xl font-bold text-teal-800 mb-5 flex items-center">
-            🚀 快速操作
+        <div class="glass-effect rounded-3xl p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-5 flex items-center gap-3">
+            <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center text-white shadow-lg">🚀</span>
+            快速操作
           </h3>
           <NuxtLink
             to="/posts/create"
-            class="block w-full text-center px-6 py-4 bg-gradient-to-r from-amber-500 via-orange-500 to-teal-500 text-white font-bold rounded-xl hover:from-amber-600 hover:via-orange-600 hover:to-teal-600 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
+            class="block w-full text-center px-6 py-4 gradient-bg text-white font-bold rounded-xl hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
           >
             ✍️ 发布新帖
           </NuxtLink>
+        </div>
+
+        <div class="glass-effect rounded-3xl p-6 pulse-glow">
+          <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-3">
+            <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white">🌟</span>
+            热门推荐
+          </h3>
+          <p class="text-sm text-gray-600 mb-4">
+            加入我们，发现更多校园精彩内容！
+          </p>
+          <div class="text-3xl text-center">🎓</div>
         </div>
       </div>
     </div>

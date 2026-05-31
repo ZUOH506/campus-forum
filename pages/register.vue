@@ -1,16 +1,22 @@
 <template>
   <div class="min-h-[calc(100vh-8rem)] flex items-center justify-center px-4 py-12">
-    <div class="max-w-md w-full">
-      <div class="glass-effect rounded-2xl shadow-2xl border border-amber-100 p-10">
+    <div class="max-w-md w-full animate-fade-in-up">
+      <div class="glass-effect rounded-3xl shadow-2xl p-10">
         <div class="text-center mb-10">
-          <div class="text-5xl mb-4">🎉</div>
-          <h2 class="text-3xl font-black text-amber-800">加入我们!</h2>
-          <p class="text-amber-600/70 mt-2">创建你的校园论坛账号</p>
+          <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-4xl shadow-xl">
+            🎉
+          </div>
+          <h2 class="text-4xl font-black mb-3">
+            <span class="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              加入我们!
+            </span>
+          </h2>
+          <p class="text-gray-600">创建你的校园论坛账号</p>
         </div>
 
-        <form @submit.prevent="handleRegister">
-          <div class="mb-5">
-            <label for="username" class="block text-sm font-semibold text-gray-700 mb-2">
+        <form @submit.prevent="handleRegister" class="space-y-5">
+          <div>
+            <label for="username" class="block text-sm font-semibold text-gray-700 mb-3">
               👤 用户名
             </label>
             <input
@@ -18,13 +24,13 @@
               v-model="form.username"
               type="text"
               required
-              class="w-full px-5 py-4 border-2 border-amber-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-amber-100 focus:border-amber-400 bg-white/80 transition-all duration-300"
+              class="input-field"
               placeholder="请输入用户名"
             />
           </div>
 
-          <div class="mb-5">
-            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+          <div>
+            <label for="email" class="block text-sm font-semibold text-gray-700 mb-3">
               📧 邮箱
             </label>
             <input
@@ -32,13 +38,13 @@
               v-model="form.email"
               type="email"
               required
-              class="w-full px-5 py-4 border-2 border-amber-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-amber-100 focus:border-amber-400 bg-white/80 transition-all duration-300"
+              class="input-field"
               placeholder="请输入邮箱"
             />
           </div>
 
-          <div class="mb-8">
-            <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">
+          <div>
+            <label for="password" class="block text-sm font-semibold text-gray-700 mb-3">
               🔒 密码
             </label>
             <input
@@ -47,7 +53,7 @@
               type="password"
               required
               minlength="6"
-              class="w-full px-5 py-4 border-2 border-amber-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-amber-100 focus:border-amber-400 bg-white/80 transition-all duration-300"
+              class="input-field"
               placeholder="请输入密码（至少6位）"
             />
           </div>
@@ -55,16 +61,22 @@
           <button
             type="submit"
             :disabled="loading"
-            class="w-full px-6 py-4 bg-gradient-to-r from-teal-500 via-orange-500 to-amber-500 text-white font-bold text-lg rounded-xl hover:from-teal-600 hover:via-orange-600 hover:to-amber-600 hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
+            class="w-full gradient-bg text-white font-bold text-lg py-4 rounded-xl hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {{ loading ? '✨ 注册中...' : '🚀 立即注册' }}
+            <span v-if="loading" class="flex items-center justify-center gap-2">
+              <span class="inline-block w-5 h-5 border-3 border-white border-t-transparent rounded-full animate-spin"></span>
+              注册中...
+            </span>
+            <span v-else class="flex items-center justify-center gap-2">
+              🚀 立即注册
+            </span>
           </button>
         </form>
 
         <div class="mt-8 text-center">
           <p class="text-gray-600">
             已有账号?
-            <NuxtLink to="/login" class="text-amber-600 hover:text-amber-700 font-bold">
+            <NuxtLink to="/login" class="text-indigo-600 hover:text-indigo-700 font-bold ml-1">
               立即登录 →
             </NuxtLink>
           </p>
