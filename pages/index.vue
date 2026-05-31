@@ -13,7 +13,7 @@
           <h2 class="text-2xl font-bold text-amber-800 mb-6 flex items-center">
             📝 最新帖子
           </h2>
-          <div v-if="postsStore.loading" class="text-center py-10 text-amber-600">
+          <div v-if="postsStore.loading" class="text-center py-10 text-black-600">
             <div class="animate-pulse">加载中...</div>
           </div>
           <div v-else-if="postsStore.posts.length === 0" class="text-center py-10 text-amber-600">
