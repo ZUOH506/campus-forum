@@ -6,7 +6,7 @@
           <div class="flex items-center">
             <NuxtLink to="/" class="text-2xl font-bold text-white drop-shadow-lg flex items-center gap-2">
               <span class="text-3xl">🎓</span>
-              <span class="hidden sm:inline">校园论坛</span>
+              <span class="hidden sm:inline">CampusHub</span>
             </NuxtLink>
             <div class="hidden sm:ml-8 sm:flex sm:items-center sm:space-x-1">
               <NuxtLink
@@ -69,9 +69,9 @@
     <footer class="bg-gradient-to-r from-amber-100 via-orange-100 to-teal-100 border-t border-amber-200 mt-auto">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="text-center">
-          <h3 class="text-lg font-bold text-amber-800 mb-2">🎓 校园论坛</h3>
+          <h3 class="text-lg font-bold text-amber-800 mb-2">CampusHub</h3>
           <p class="text-sm text-amber-700/70">
-            © 2024 校园论坛. Connecting Campus, Sharing Dreams.
+            © 2026立达校园论坛. Connecting Campus, Sharing Dreams.
           </p>
         </div>
       </div>
