@@ -4,7 +4,7 @@
       <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <div class="flex items-center">
-            <NuxtLink to="/" class="text-2xl font-bold text-white drop-shadow-lg flex items-center gap-2">
+            <NuxtLink to="/" class="text-2xl font-bold text-black drop-shadow-lg flex items-center gap-2">
               <span class="text-3xl">🎓</span>
               <span class="hidden sm:inline">CampusHub</span>
             </NuxtLink>
