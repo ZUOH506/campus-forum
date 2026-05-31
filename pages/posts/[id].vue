@@ -140,6 +140,6 @@ function formatDate(dateString: string) {
 }
 
 useHead({
-  title: postsStore.currentPost ? `${postsStore.currentPost.title} - 校园论坛` : '帖子详情 - 校园论坛'
+  title: postsStore.currentPost ? `${postsStore.currentPost.title} - CampusHub` : '帖子详情 - CampusHub'
 })
 </script>

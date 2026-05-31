@@ -67,11 +67,7 @@
           </p>
         </div>
 
-        <div class="mt-8 p-5 bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 rounded-2xl border border-indigo-100">
-          <p class="text-xs font-semibold text-indigo-700 mb-3">📝 测试账号:</p>
-          <p class="text-sm text-gray-700">👤 用户名: <span class="font-bold">admin</span></p>
-          <p class="text-sm text-gray-700">🔑 密码: <span class="font-bold">admin123</span></p>
-        </div>
+      
       </div>
     </div>
   </div>
@@ -104,6 +100,6 @@ async function handleLogin() {
 }
 
 useHead({
-  title: '登录 - 校园论坛'
+  title: '登录 - CampusHub'
 })
 </script>

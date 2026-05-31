@@ -11,7 +11,7 @@
               加入我们!
             </span>
           </h2>
-          <p class="text-gray-600">创建你的校园论坛账号</p>
+          <p class="text-gray-600">创建你的CampusHub账号</p>
         </div>
 
         <form @submit.prevent="handleRegister" class="space-y-5">
@@ -119,6 +119,6 @@ async function handleRegister() {
 }
 
 useHead({
-  title: '注册 - 校园论坛'
+  title: '注册 - CampusHub'
 })
 </script>

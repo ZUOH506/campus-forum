@@ -3,7 +3,7 @@
     <div class="mb-12 text-center animate-fade-in-up">
       <h1 class="text-5xl font-black mb-4">
         <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-          ✨ 欢迎来到校园论坛 ✨
+          ✨ 欢迎来到CampusHub ✨
         </span>
       </h1>
       <p class="text-xl text-gray-600">发现校园生活，分享精彩瞬间</p>

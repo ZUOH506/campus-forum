@@ -109,7 +109,7 @@ function formatDate(dateString: string) {
 }
 
 useHead({
-  title: '帖子列表 - 校园论坛'
+  title: '帖子列表 - CampusHub'
 })
 </script>
 

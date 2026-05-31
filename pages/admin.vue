@@ -248,6 +248,6 @@ await Promise.all([
 ])
 
 useHead({
-  title: '管理后台 - 校园论坛'
+  title: '管理后台 - CampusHub'
 })
 </script>
