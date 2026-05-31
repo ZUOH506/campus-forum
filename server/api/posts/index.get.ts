@@ -4,52 +4,60 @@ export default defineEventHandler(async (event) => {
   const method = event.method
 
   if (method === 'GET') {
-    const query = getQuery(event)
-    const categoryId = query.categoryId as string | undefined
+    try {
+      const query = getQuery(event)
+      const categoryId = query.categoryId as string | undefined
 
-    const posts = await prisma.post.findMany({
-      where: categoryId ? { categoryId } : undefined,
-      include: {
-        author: {
-          select: {
-            id: true,
-            username: true,
-            avatar: true
+      const posts = await prisma.post.findMany({
+        where: categoryId ? { categoryId } : undefined,
+        include: {
+          author: {
+            select: {
+              id: true,
+              username: true,
+              avatar: true
+            }
+          },
+          category: {
+            select: {
+              id: true,
+              name: true
+            }
+          },
+          comments: {
+            select: {
+              id: true
+            }
           }
         },
-        category: {
-          select: {
-            id: true,
-            name: true
-          }
-        },
-        comments: {
-          select: {
-            id: true
-          }
+        orderBy: {
+          createdAt: 'desc'
         }
-      },
-      orderBy: {
-        createdAt: 'desc'
-      }
-    })
+      })
 
-    const formattedPosts = posts.map(post => ({
-      id: post.id,
-      title: post.title,
-      content: post.content,
-      authorId: post.author.id,
-      authorName: post.author.username,
-      authorAvatar: post.author.avatar,
-      categoryId: post.category.id,
-      categoryName: post.category.name,
-      createdAt: post.createdAt.toISOString(),
-      updatedAt: post.updatedAt.toISOString(),
-      commentCount: post.comments.length,
-      viewCount: post.viewCount
-    }))
+      const formattedPosts = posts.map(post => ({
+        id: post.id,
+        title: post.title,
+        content: post.content,
+        authorId: post.author.id,
+        authorName: post.author.username,
+        authorAvatar: post.author.avatar,
+        categoryId: post.category.id,
+        categoryName: post.category.name,
+        createdAt: post.createdAt.toISOString(),
+        updatedAt: post.updatedAt.toISOString(),
+        commentCount: post.comments.length,
+        viewCount: post.viewCount
+      }))
 
-    return { posts: formattedPosts }
+      return { posts: formattedPosts }
+    } catch (error: any) {
+      console.error('Posts fetch error:', error)
+      throw createError({
+        statusCode: 500,
+        message: `获取帖子失败: ${error.message}`
+      })
+    }
   }
 
   if (method === 'POST') {
