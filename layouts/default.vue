@@ -34,7 +34,7 @@
             <template v-if="auth.isAuthenticated">
               <div class="user-badge">
                 <span class="text-lg">👤</span>
-                <span class="text-sm font-medium text-white">{{ auth.user?.username }}</span>
+                <span class="text-sm font-medium text-black">{{ auth.user?.username }}</span>
               </div>
               <button
                 @click="auth.logout"
